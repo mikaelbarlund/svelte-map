@@ -6,6 +6,16 @@
 		<link rel="icon" href="%svelte.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		%svelte.head%
+		<script>
+			window.initMap = () => {
+				console.info('init map');
+			};
+		</script>
+		<script
+			defer
+			async
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2SlKKDsYSk53Xw0xSzFKNqSFt3zV1o3A&callback=initMap"
+		></script>
 	</head>
 	<body>
 		<div>%svelte.body%</div>

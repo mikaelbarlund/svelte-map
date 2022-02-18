@@ -8,6 +8,18 @@
 		data = await response.json();
 	})();
 </script>
+
+<div class="modal" on:click>
+	<div class="modal-content">
+		<h1>{ship}</h1>
+		{#if data}
+			<div>{data.name}</div>
+		{:else}
+			<Spin />
+		{/if}
+	</div>
+</div>
+
 <style>
 	.modal {
 		display: block; /* Hidden by default */
@@ -18,8 +30,8 @@
 		width: 100%; /* Full width */
 		height: 100%; /* Full height */
 		overflow: auto; /* Enable scroll if needed */
-		background-color: rgb(0,0,0); /* Fallback color */
-		background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+		background-color: rgb(0, 0, 0); /* Fallback color */
+		background-color: rgba(0, 0, 0, 0.2); /* Black w/ opacity */
 	}
 
 	/* Modal Content/Box */
@@ -31,14 +43,3 @@
 		width: 80%; /* Could be more or less, depending on screen size */
 	}
 </style>
-<div class="modal" on:click>
-
-	<div class="modal-content">
-<h1>{ship}</h1>
-{#if data}
-	<div>{data.name}</div>
-{:else}
-	<Spin />
-{/if}
-		</div>
-</div>

@@ -10,7 +10,7 @@
 	let ship;
 	import { onMount } from 'svelte';
 
-	const image = 'static/icons8-boat-32.png';
+	const image = 'icons8-boat-32.png';
 	const clickMarker = (mmsi) => {
 		ship = mmsi;
 	};
@@ -63,7 +63,7 @@
 </button>
 <button on:click={() => (features = [])}>clear</button>
 {#if ship}
-	<Ship {ship} on:click={()=>ship=undefined}/>
+	<Ship {ship} on:click={() => (ship = undefined)} />
 {/if}
 <div class="full-screen" bind:this={container} />
 

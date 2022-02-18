@@ -1,4 +1,5 @@
 <script>
-    import { Diamonds } from 'svelte-loading-spinners'
+	import { Diamonds } from 'svelte-loading-spinners';
 </script>
-<Diamonds/>
+
+<Diamonds />
