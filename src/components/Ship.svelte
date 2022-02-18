@@ -11,9 +11,13 @@
 
 <div class="modal" on:click>
 	<div class="modal-content">
-		<h1>{ship}</h1>
 		{#if data}
-			<div>{data.name}</div>
+			<h2>Callname {data.callSign}</h2>
+			<h3>{data.name}</h3>
+			<ul>
+				<li>destination: {data.destination}</li>
+				<li>draught: {data.draught}</li>
+			</ul>
 		{:else}
 			<Spin />
 		{/if}
