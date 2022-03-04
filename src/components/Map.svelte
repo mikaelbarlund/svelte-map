@@ -57,7 +57,7 @@
 </script>
 
 {#if mmsi}
-	<Ship {mmsi} on:click={() => (ship = undefined)} />
+	<Ship {mmsi} on:click={() => (mmsi = undefined)} />
 {/if}
 <div class="container">
 	<div class="map element" bind:this={container} />
