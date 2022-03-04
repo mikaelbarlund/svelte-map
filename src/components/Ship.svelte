@@ -11,12 +11,16 @@
 		const response = await fetch(`https://meri.digitraffic.fi/api/v1/metadata/vessels/${mmsi}`);
 		return response.json();
 	};
-	$: promisedShip = getShip();
+	let promisedShip = getShip();
 </script>
 
 <!-- https://svelte.dev/docs#template-syntax-await -->
 <div class="modal" on:click in:fade out:fade>
-	<div class="modal-content" in:fly={{ x: -200, duration: 1500 }} out:fly={{ x: 200, duration: 1500 }}>
+	<div
+		class="modal-content"
+		in:fly={{ x: -200, duration: 1500 }}
+		out:fly={{ x: 200, duration: 1500 }}
+	>
 		{#await promisedShip}
 			<Spin />
 		{:then ship}
