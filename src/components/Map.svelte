@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Ship from './Ship.svelte';
 	let container;
 	let map;
@@ -61,7 +61,7 @@
 	}}
 	>where am I
 </button>
-<button on:click={() => (features = [])}>clear</button>
+<button on:click={() => (features = [])}>clear all</button>
 {#if ship}
 	<Ship {ship} on:click={() => (ship = undefined)} />
 {/if}
