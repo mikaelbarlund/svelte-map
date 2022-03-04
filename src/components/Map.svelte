@@ -61,7 +61,7 @@
 	}}
 	>where am I
 </button>
-<button on:click={() => (features = [])}>clear all</button>
+<button on:click={() => (features = [])}>clear all ships</button>
 {#if ship}
 	<Ship {ship} on:click={() => (ship = undefined)} />
 {/if}
