@@ -9,11 +9,11 @@
 	let location;
 	let features = [];
 	let markers = [];
-	let ship;
+	let mmsi;
 
 	const image = 'icons8-boat-32.png';
-	const clickMarker = (mmsi) => {
-		ship = mmsi;
+	const clickMarker = (input) => {
+		mmsi = input;
 	};
 	const getShips = async () => {
 		const response = await fetch('https://meri.digitraffic.fi/api/v1/locations/latest');
@@ -56,8 +56,8 @@
 	})();
 </script>
 
-{#if ship}
-	<Ship {ship} on:click={() => (ship = undefined)} />
+{#if mmsi}
+	<Ship {mmsi} on:click={() => (ship = undefined)} />
 {/if}
 <div class="container">
 	<div class="map element" bind:this={container} />

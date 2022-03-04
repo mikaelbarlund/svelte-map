@@ -1,13 +1,17 @@
 <script lang="ts">
 	import Spin from './Spin.svelte';
 	import { fade, fly } from 'svelte/transition';
-	export let ship;
-	let data;
-	$: (async () => {
-		data = undefined;
-		const response = await fetch(`https://meri.digitraffic.fi/api/v1/metadata/vessels/${ship}`);
-		data = await response.json();
-	})();
+	type Ship = {
+		name: string;
+		destination: string;
+		callSign: string;
+	};
+	export let mmsi;
+	const getShip = async (): Promise<Ship> => {
+		const response = await fetch(`https://meri.digitraffic.fi/api/v1/metadata/vessels/${mmsi}`);
+		return response.json();
+	};
+	$: promisedShip = getShip();
 </script>
 
 <!-- https://svelte.dev/docs#template-syntax-await -->
@@ -17,16 +21,18 @@
 		in:fly={{ x: -200, duration: 1500 }}
 		out:fly={{ x: 200, duration: 1500 }}
 	>
-		{#if data}
-			<h2>Callname {data.callSign}</h2>
-			<h3>{data.name}</h3>
-			<ul>
-				<li>destination: {data.destination}</li>
-				<li>draught: {data.draught}</li>
-			</ul>
-		{:else}
+		{#await promisedShip}
 			<Spin />
-		{/if}
+		{:then ship}
+			<h2>Callname {ship.callSign}</h2>
+			<h3>{ship.name}</h3>
+			<ul>
+				<li>destination: {ship.destination}</li>
+				<li>draught: {ship.draught}</li>
+			</ul>
+		{:catch error}
+			<div>{error}</div>
+		{/await}
 	</div>
 </div>
 
