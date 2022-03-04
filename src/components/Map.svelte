@@ -30,6 +30,7 @@
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				location = { lat: position.coords.latitude, lng: position.coords.longitude };
+				// eslint-disable-next-line no-undef
 				new google.maps.Marker({
 					position: location,
 					map: map
@@ -43,6 +44,7 @@
 		markers = [];
 		features.forEach((a) => {
 			const where = { lat: a.geometry.coordinates[1], lng: a.geometry.coordinates[0] };
+			// eslint-disable-next-line no-undef
 			const marker = new google.maps.Marker({
 				position: where,
 				map: map,
