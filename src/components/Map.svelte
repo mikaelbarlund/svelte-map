@@ -1,5 +1,7 @@
 <script lang="ts">
 	import Ship from './Ship.svelte';
+	import { onMount } from 'svelte';
+
 	let container;
 	let map;
 	let zoom = 12;
@@ -8,11 +10,15 @@
 	let features = [];
 	let markers = [];
 	let ship;
-	import { onMount } from 'svelte';
 
 	const image = 'icons8-boat-32.png';
 	const clickMarker = (mmsi) => {
 		ship = mmsi;
+	};
+	const getShips = async () => {
+		const response = await fetch('https://meri.digitraffic.fi/api/v1/locations/latest');
+		const ships = await response.json();
+		features = ships.features.filter((a) => a.properties.timestampExternal > Date.now() - 360000);
 	};
 	onMount(async () => {
 		// eslint-disable-next-line no-undef
@@ -20,11 +26,7 @@
 			zoom,
 			center
 		});
-		await (async () => {
-			const response = await fetch('https://meri.digitraffic.fi/api/v1/locations/latest');
-			const ships = await response.json();
-			features = ships.features.filter((a) => a.properties.timestampExternal > Date.now() - 360000);
-		})();
+		await getShips();
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
 				location = { lat: position.coords.latitude, lng: position.coords.longitude };
@@ -54,22 +56,36 @@
 	})();
 </script>
 
-<button
-	on:click={() => {
-		map?.setCenter(location);
-		map?.setZoom(12);
-	}}
-	>where am I
-</button>
-<button on:click={() => (features = [])}>clear all ships!</button>
 {#if ship}
 	<Ship {ship} on:click={() => (ship = undefined)} />
 {/if}
-<div class="full-screen" bind:this={container}></div>
+<div class="container">
+	<div class="map element" bind:this={container} />
+	<div class="details element">
+		<button
+			on:click={() => {
+				map?.setCenter(location);
+				map?.setZoom(12);
+			}}
+			>where am I
+		</button>
+		<button on:click={() => (features = [])}>clear all ships</button>
+		<button on:click={() => getShips()}>reload ships</button>
+	</div>
+</div>
 
 <style>
-	.full-screen {
-		width: 60vw;
-		height: 100vh;
+	.container {
+		display: flex;
+	}
+	.element {
+		padding: 10px;
+	}
+	.map {
+		flex: 2;
+		height: 90vh;
+	}
+	.details {
+		flex: 1;
 	}
 </style>
