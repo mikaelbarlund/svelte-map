@@ -65,11 +65,11 @@
 {#if ship}
 	<Ship {ship} on:click={() => (ship = undefined)} />
 {/if}
-<div class="full-screen" bind:this={container} />
+<div class="full-screen" bind:this={container}></div>
 
 <style>
 	.full-screen {
-		width: 100vw;
+		width: 60vw;
 		height: 100vh;
 	}
 </style>
