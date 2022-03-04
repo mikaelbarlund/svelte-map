@@ -2,6 +2,11 @@
     import Map from '../components/Map.svelte';
 </script>
 <svelte:head>
+    <script>
+        window.initMap = () => {
+            console.info('init map');
+        };
+    </script>
     <script
             defer
             async
