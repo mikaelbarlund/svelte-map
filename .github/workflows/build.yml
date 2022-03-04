@@ -1,4 +1,4 @@
-name: koodisto-ui
+name: svelte-ais-map
 on:
   workflow_dispatch:
   push:
