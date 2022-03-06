@@ -13,7 +13,6 @@
 		"deploy": "dotenv cross-var aws s3 sync build %S3_BUCKET%"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-static": "^1.0.0-next.29",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^5.10.1",
