@@ -4,13 +4,9 @@
 	import { fade, fly } from 'svelte/transition';
 	import Ship from './Ship.svelte';
 	const dispatch = createEventDispatcher();
-	type ShipApi = {
-		name: string;
-		destination: string;
-		callSign: string;
-	};
+
 	export let mmsi;
-	const getShip = async (): Promise<ShipApi> => {
+	const getShip = async () => {
 		const response = await fetch(`https://meri.digitraffic.fi/api/v1/metadata/vessels/${mmsi}`);
 		return response.json();
 	};
