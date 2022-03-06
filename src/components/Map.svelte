@@ -11,7 +11,6 @@
 	let markers = [];
 	let mmsi;
 	let selectedShips = {};
-
 	const image = 'icons8-boat-32.png';
 	const clickMarker = (input) => {
 		mmsi = input;
