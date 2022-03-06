@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import Spin from './Spin.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import Ship from './Ship.svelte';
+	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
 
 	export let mmsi;
@@ -16,7 +16,6 @@
 	}
 </script>
 
-<!-- https://svelte.dev/docs#template-syntax-await -->
 <div class="modal" on:click in:fade out:fade>
 	<div class="modal-content" in:fly={{ x: -200, duration: 1500 }}>
 		{#await promisedShip}
