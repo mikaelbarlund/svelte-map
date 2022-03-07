@@ -39,7 +39,7 @@
 				viewPortShips = allShips;
 				track = [];
 			} else {
-				viewPortShips = allShips.filter((a) => a.mmsi === e.detail.ship.mmsi);
+				viewPortShips = [];
 				track = e.detail.locations;
 				const [lng, lat] = track[0].geometry.coordinates;
 				center = { lat, lng };

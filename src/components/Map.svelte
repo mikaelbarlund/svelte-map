@@ -11,7 +11,9 @@
 	export let viewPortShips = [];
 	let shipMarkers = [];
 	export let track = [];
-	let trackMarkers = [];
+	let trackPath;
+	let firstMarker;
+	let endMarker;
 	const boat = 'icons8-boat-32.png';
 	const dot = 'dot.png';
 	const clickMarker = (input) => {
@@ -52,20 +54,37 @@
 		});
 	})();
 	$: (() => {
-		trackMarkers.forEach((a) => a.setMap(null));
-		trackMarkers = [];
-		track.forEach((a) => {
-			const where = { lat: a.geometry.coordinates[1], lng: a.geometry.coordinates[0] };
-			const marker = new $googleApi.maps.Marker({
-				position: where,
+		trackPath?.setMap(null);
+		trackPath = undefined;
+		firstMarker?.setMap(null);
+		endMarker?.setMap(null);
+		endMarker = undefined;
+		if (track.length > 0) {
+			const first = track[0];
+			const firstWhere = { lat: first.geometry.coordinates[1], lng: first.geometry.coordinates[0] };
+			firstMarker = new $googleApi.maps.Marker({
+				position: firstWhere,
+				map: map,
+				icon: boat
+			});
+		}
+		if (track.length > 1) {
+			trackPath = new $googleApi.maps.Polyline({
+				path: track.map((a) => ({ lat: a.geometry.coordinates[1], lng: a.geometry.coordinates[0] })),
+				geodesic: true,
+				strokeColor: '#FF0000',
+				strokeOpacity: 1.0,
+				strokeWeight: 2
+			});
+			trackPath.setMap(map);
+			const last = track[track.length - 1];
+			const lastWhere = { lat: last.geometry.coordinates[1], lng: last.geometry.coordinates[0] };
+			endMarker = new $googleApi.maps.Marker({
+				position: lastWhere,
 				map: map,
 				icon: dot
 			});
-			marker.addListener('click', () => {
-				clickMarker(a.mmsi);
-			});
-			trackMarkers.push(marker);
-		});
+		}
 	})();
 </script>
 
