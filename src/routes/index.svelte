@@ -8,10 +8,14 @@
 </script>
 
 <script lang="ts">
-	import Map from '../components/Map.svelte';
+	import App from '../components/App.svelte';
 </script>
 
 <svelte:head>
-	<script src="https://maps.googleapis.com/maps/api/js?key={import.meta.env.VITE_GOOGLE_MAP_KEY}&callback=googleMapsInitialized"></script>
+	<script
+		async
+		defer
+		src="https://maps.googleapis.com/maps/api/js?key={import.meta.env.VITE_GOOGLE_MAP_KEY}"
+		on:load={window.googleMapsInitialized()}></script>
 </svelte:head>
-<Map />
+<App />
