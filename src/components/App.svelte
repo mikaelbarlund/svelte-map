@@ -1,13 +1,14 @@
 <script lang="ts">
-	import ShipModal from './ShipModal.svelte';
 	import Map from './Map.svelte';
 	import { googleApi } from '../stores.js';
 	import Details from './Details.svelte';
 	import { onMount } from 'svelte';
-	let mmsi;
+
+	let center = { lat: 60.192059, lng: 24.945831 };
 	let selectedShips = {};
 	let allShips = [];
 	let viewPortShips = [];
+	let track = [];
 	const getShips = async () => {
 		const response = await fetch('https://meri.digitraffic.fi/api/v1/locations/latest');
 		const ships = await response.json();
@@ -17,33 +18,35 @@
 	onMount(async () => {
 		getShips();
 	});
+	const onMmsi = async (e) => {
+		const mmsi = e.detail;
+		const response = await fetch(`https://meri.digitraffic.fi/api/v1/metadata/vessels/${mmsi}`);
+		const data = await response.json();
+		selectedShips[data.name] = data;
+		selectedShips = { ...selectedShips };
+	};
 </script>
 
-{#if mmsi}
-	<ShipModal
-		{mmsi}
-		on:click={() => (mmsi = undefined)}
-		on:ship={(e) => {
-			selectedShips[e.detail.name] = e.detail;
-			selectedShips = { ...selectedShips };
-		}}
-	/>
-{/if}
 <div class="container">
 	{#if $googleApi}
-		<Map
-			bind:features={viewPortShips}
-			on:mmsi={(a) => {
-				mmsi = a.detail;
-			}}
-		/>
+		<Map bind:center bind:viewPortShips bind:track on:mmsi={onMmsi} />
 	{/if}
 	<Details
 		{selectedShips}
 		{viewPortShips}
-		on:ship={(ship) => {
-			if (viewPortShips.length == 1 && viewPortShips[0].mmsi === ship.detail.mmsi) viewPortShips = allShips;
-			else viewPortShips = allShips.filter((a) => a.mmsi === ship.detail.mmsi);
+		on:ship={(e) => {
+			if (viewPortShips.length === 1 && viewPortShips[0].mmsi === e.detail.ship.mmsi) {
+				viewPortShips = allShips;
+				track = [];
+			} else {
+				viewPortShips = allShips.filter((a) => a.mmsi === e.detail.ship.mmsi);
+				track = e.detail.locations;
+				const [lng, lat] = track[0].geometry.coordinates;
+				center = { lat, lng };
+			}
+		}}
+		on:newLocation={(a) => {
+			track = a.detail;
 		}}
 	/>
 </div>

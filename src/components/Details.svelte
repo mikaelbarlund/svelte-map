@@ -10,6 +10,7 @@
 			<Ship
 				ship={selectedShips[selectedShip]}
 				on:ship
+				on:newLocation
 				selected={viewPortShips.length === 1 && viewPortShips[0].mmsi === selectedShips[selectedShip].mmsi}
 			/>
 		{/each}
