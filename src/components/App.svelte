@@ -48,6 +48,12 @@
 		on:newLocation={(a) => {
 			track = a.detail;
 		}}
+		on:remove={(a) => {
+			delete selectedShips[a.detail.name];
+			selectedShips = selectedShips;
+			viewPortShips = allShips;
+			track = [];
+		}}
 	/>
 </div>
 

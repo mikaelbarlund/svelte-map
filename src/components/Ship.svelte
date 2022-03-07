@@ -42,6 +42,7 @@
 		<li>destination: {ship.destination}</li>
 		<li>draught: {ship.draught}</li>
 	</ul>
+	<button on:click={() => dispatch('remove', ship)}>remove</button>
 </div>
 
 <style>
