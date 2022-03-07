@@ -2,8 +2,6 @@
 	import Spin from './Spin.svelte';
 	import { fade, fly } from 'svelte/transition';
 	import Ship from './Ship.svelte';
-	import { createEventDispatcher } from 'svelte';
-	const dispatch = createEventDispatcher();
 
 	export let mmsi;
 	const getShip = async () => {
@@ -11,9 +9,6 @@
 		return response.json();
 	};
 	let promisedShip = getShip();
-	function onClick(ship) {
-		dispatch('ship', ship);
-	}
 </script>
 
 <div class="modal" on:click in:fade out:fade>
@@ -21,9 +16,7 @@
 		{#await promisedShip}
 			<Spin />
 		{:then ship}
-			<div on:click={() => onClick(ship)}>
-				<Ship {ship} />
-			</div>
+			<Ship {ship} on:ship />
 		{:catch error}
 			<div>{error}</div>
 		{/await}
