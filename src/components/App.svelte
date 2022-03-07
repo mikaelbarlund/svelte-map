@@ -33,9 +33,8 @@
 	{/if}
 	<Details
 		{selectedShips}
-		{viewPortShips}
 		on:ship={(e) => {
-			if (viewPortShips.length === 1 && viewPortShips[0].mmsi === e.detail.ship.mmsi) {
+			if (!e.detail) {
 				viewPortShips = allShips;
 				track = [];
 			} else {
