@@ -1,6 +1,5 @@
 <script lang="ts">
 	import ShipModal from './ShipModal.svelte';
-	import Ship from './Ship.svelte';
 	import Map from './Map.svelte';
 	import { googleApi } from '../stores.js';
 	import Details from './Details.svelte';
