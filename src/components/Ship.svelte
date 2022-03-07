@@ -2,7 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
 	import { onMount } from 'svelte';
 	const dispatch = createEventDispatcher();
-
+	import { getNotificationsContext } from 'svelte-notifications';
+	const { addNotification } = getNotificationsContext();
 	export let ship;
 	export let selected;
 
@@ -18,7 +19,11 @@
 			}))[0];
 			if (locations[0]?.timestamp !== newLocation.timestamp) {
 				locations = [...locations, newLocation].sort((a, b) => (a.timestamp > b.timestamp ? -1 : 1));
-				console.info(`found new location for ${ship.mmsi} ${ship.name}`);
+				addNotification({
+					text: `found new location for ${ship.mmsi} ${ship.name}`,
+					position: 'bottom-left',
+					removeAfter: 1000
+				});
 			}
 			if (selected) {
 				dispatch('newLocation', locations);

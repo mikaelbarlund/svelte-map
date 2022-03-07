@@ -21,5 +21,7 @@
 	.details {
 		flex: 1;
 		padding: 0.1rem;
+		height: 90vh;
+		overflow: auto;
 	}
 </style>
